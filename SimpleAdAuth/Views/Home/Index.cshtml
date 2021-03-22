@@ -1,0 +1,35 @@
+﻿@using SimpleAdAuth.Data;
+@model IndexViewModel;
+
+
+<div class="container">
+    <main role="main" class="pb-3" style="margin-top: 70px;">
+        @foreach (Ad ad in Model.Ads)
+        {
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="jumbotron">
+                        <h5>@ad.Name</h5>
+                        <h5>Listed on @ad.DateCreated.ToShortDateString()</h5>
+                        <h5>Phone Number: @ad.PhoneNumber</h5>
+                        <h3>Details:</h3>
+                        <p>
+                            @ad.Text</p>
+
+                        @if (Model.CurrentUser != null)
+                        {
+
+                            @if (Model.CurrentUser.Id == ad.UserId)
+                            {
+                                <form method="POST" action="/home/delete">
+                                    <input type="hidden" value="@ad.Id" name="Id" />
+                                    <button class="btn btn-outline-danger">Delete</button>
+                                </form>
+                            }
+                        }
+                </div>
+            </div>
+        </div>
+    }
+    </main>
+</div>
